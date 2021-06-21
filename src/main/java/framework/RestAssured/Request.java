@@ -2,13 +2,15 @@ package framework.RestAssured;
 
 import java.util.Map;
 
+import org.json.simple.JSONObject;
+
 import io.restassured.response.Response;
 
 public class Request {
 	
-	public Response hitRequest(String requestMethod,String requestUrl, Map<String,Object>queryParams) {
+	public Response hitGetRequest(String requestMethod,String requestUrl, Map<String,Object>queryParams) {
 		Response response=null;
-		if(requestMethod.equalsIgnoreCase("GET")) {
+		
 			GetRequest getRequest= new GetRequest(requestUrl,queryParams);
 			try {
 				response=getRequest.hitRequest();
@@ -16,18 +18,13 @@ public class Request {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		else {
-			if(requestMethod.equalsIgnoreCase("Post")) {
-				
-			}
-		}
+	
 		return response;
 	}
 	
-	public Response hitRequest(String requestMethod,String requestUrl) {
+	public Response hitGetRequest(String requestMethod,String requestUrl) {
 		Response response=null;
-		if(requestMethod.equalsIgnoreCase("GET")) {
+		
 			GetRequest getRequest= new GetRequest(requestUrl);
 			try {
 				response=getRequest.hitRequest();
@@ -35,11 +32,18 @@ public class Request {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		
+		return response;
+	}
+	
+	public Response hitPostRequest(Map<String,Object>headersMap,String requestUrl,JSONObject requestParams) {
+		Response response=null;
+		PostRequest postRequest=new PostRequest(headersMap,requestUrl,requestParams);
+		try {
+			response=postRequest.hitRequest();
 		}
-		else {
-			if(requestMethod.equalsIgnoreCase("Post")) {
-				
-			}
+		catch(Exception e) {
+			e.printStackTrace();
 		}
 		return response;
 	}
